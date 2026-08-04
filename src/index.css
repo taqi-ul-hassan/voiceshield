@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+  --color-navy-700: #334155;
+  --color-accent-blue: #3b82f6;
+  --color-accent-green: #22c55e;
+  --color-accent-amber: #f59e0b;
+  --color-accent-red: #ef4444;
+  --color-surface: #f8fafc;
+  --color-card: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.bg-dotgrid-glow {
+  background-color: oklch(0.1638 0 0);
+  background-image:
+    radial-gradient(
+      circle at 50% 118%,
+      oklch(0.41 0.14 250 / 45%) 0%,
+      oklch(0.41 0.14 250 / 22%) 22%,
+      oklch(0.41 0.14 250 / 10%) 32%,
+      oklch(0.41 0.14 250 / 4%) 38%,
+      transparent 45%
+    ),
+    radial-gradient(oklch(0.41 0.14 250 / 4%) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    16px 16px;
+  background-position: center, center;
+}
