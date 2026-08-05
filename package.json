@@ -1,15 +1,19 @@
 {
-  "name": "my-app",
+  "name": "voiceshield",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@speechmatics/browser-audio-input": "^2.0.4",
+    "@speechmatics/browser-audio-input-react": "^2.0.4",
+    "@speechmatics/real-time-client-react": "^3.5.1",
     "lucide-react": "^1.28.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
