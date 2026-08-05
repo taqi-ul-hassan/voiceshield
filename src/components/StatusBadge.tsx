@@ -1,6 +1,6 @@
 import { CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 import { cn } from "../lib/utils";
-import type { LiveVerdict as Verdict } from "../features/voice-audit/types";
+import type { Verdict } from "../types";
 
 type Size = "sm" | "md" | "default";
 

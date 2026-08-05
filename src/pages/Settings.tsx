@@ -1,81 +1,358 @@
-import { useState } from "react";
-import { useRuntimeSettings } from "../features/voice-audit/runtime";
-import type { AgentRole, AIProvider, Persona, SpeechmaticsVoice } from "../features/voice-audit/types";
+import { useState, useEffect } from "react";
+import { Save, Building2, Bot, Bell, Sparkles, Key, Cpu } from "lucide-react";
+import { cn } from "../lib/utils";
+import type { AIProvider } from "../engine/evaluator";
 
 export default function Settings() {
-  const { settings, updateSettings, clearProviderKeys } = useRuntimeSettings();
-  const [draft, setDraft] = useState(settings);
-  const [showAIMLKey, setShowAIMLKey] = useState(false);
-  const [showSpeechmaticsKey, setShowSpeechmaticsKey] = useState(false);
+  const [companyName, setCompanyName] = useState("Meridian Financial");
+  const [industry, setIndustry] = useState("Banking");
+  const [agentName, setAgentName] = useState("Meridian Support Agent");
+  const [tone, setTone] = useState("professional");
+  const [welcomeMessage, setWelcomeMessage] = useState(
+    "Welcome to Meridian Financial. How can I help you today?"
+  );
   const [saved, setSaved] = useState(false);
+  const [notifications, setNotifications] = useState({
+    dailyDigest: true,
+    criticalFailures: true,
+    weeklyReport: false,
+  });
 
-  const save = () => {
-    updateSettings(draft);
+  // AI Provider settings (stored in localStorage)
+  const [aiProvider, setAiProvider] = useState<AIProvider>(() => {
+    return (localStorage.getItem("voiceguard_ai_provider") as AIProvider) || "local";
+  });
+  const [apiKey, setApiKey] = useState(() => {
+    return localStorage.getItem("voiceguard_api_key") || "";
+  });
+  const [showApiKey, setShowApiKey] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("voiceguard_ai_provider", aiProvider);
+  }, [aiProvider]);
+
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem("voiceguard_api_key", apiKey);
+    } else {
+      localStorage.removeItem("voiceguard_api_key");
+    }
+  }, [apiKey]);
+
+  const handleSave = () => {
     setSaved(true);
-    window.setTimeout(() => setSaved(false), 1800);
+    setTimeout(() => setSaved(false), 2000);
   };
 
-  const clearKeys = () => {
-    clearProviderKeys();
-    setDraft((current) => ({ ...current, aimlApiKey: "", speechmaticsApiKey: "" }));
+  const toggleNotification = (key: keyof typeof notifications) => {
+    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-sm text-gray-500 mt-1">Configure the browser demo and provider connections</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Configure your company profile and agent guardrails
+        </p>
       </div>
 
-      <div className="max-w-2xl space-y-6">
-        <section className="bg-card rounded-xl border border-gray-100 shadow-sm p-6">
-          <h2 className="text-base font-semibold text-gray-900">AI Evaluation Provider</h2>
-          <p className="text-xs text-gray-400 mt-1 mb-5">Keys are kept in memory only and disappear when this page is refreshed.</p>
-          <div className="space-y-4">
-            <Field label="Provider"><select value={draft.aiProvider} onChange={(event) => setDraft({ ...draft, aiProvider: event.target.value as AIProvider })} className={inputClass}><option value="mock">Mock mode (no key required)</option><option value="aiml">AIML API</option></select></Field>
-            <Field label="AIML model"><input value={draft.aimlModel} onChange={(event) => setDraft({ ...draft, aimlModel: event.target.value })} className={inputClass} /></Field>
-            <SecretField label="AIML API key" value={draft.aimlApiKey} visible={showAIMLKey} onToggle={() => setShowAIMLKey(!showAIMLKey)} onChange={(value) => setDraft({ ...draft, aimlApiKey: value })} placeholder="Enter a key for live AIML evaluation" />
+      <div className="space-y-6 max-w-2xl">
+        {/* Company Profile */}
+        <section className="bg-card rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
+            <Building2 className="w-4 h-4 text-gray-400" />
+            <h2 className="text-base font-semibold text-gray-900">
+              Company Profile
+            </h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div>
+              <label
+                htmlFor="company-name"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Company Name
+              </label>
+              <input
+                id="company-name"
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="industry"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Industry
+              </label>
+              <select
+                id="industry"
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow bg-white"
+              >
+                <option value="Airlines">Airlines</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Retail">Retail</option>
+                <option value="Banking">Banking</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Technology">Technology</option>
+              </select>
+            </div>
           </div>
         </section>
 
-        <section className="bg-card rounded-xl border border-gray-100 shadow-sm p-6">
-          <h2 className="text-base font-semibold text-gray-900">Speechmatics</h2>
-          <p className="text-xs text-gray-400 mt-1 mb-5">Used for microphone transcription and per-turn speech playback.</p>
-          <div className="space-y-4">
-            <SecretField label="Speechmatics API key" value={draft.speechmaticsApiKey} visible={showSpeechmaticsKey} onToggle={() => setShowSpeechmaticsKey(!showSpeechmaticsKey)} onChange={(value) => setDraft({ ...draft, speechmaticsApiKey: value })} placeholder="Enter a Speechmatics key for audio" />
-            <Field label="TTS endpoint"><input value={draft.speechmaticsTtsUrl} onChange={(event) => setDraft({ ...draft, speechmaticsTtsUrl: event.target.value })} className={inputClass} /></Field>
+        {/* Agent Persona */}
+        <section className="bg-card rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
+            <Bot className="w-4 h-4 text-gray-400" />
+            <h2 className="text-base font-semibold text-gray-900">
+              Agent Persona
+            </h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div>
+              <label
+                htmlFor="agent-name"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Agent Name
+              </label>
+              <input
+                id="agent-name"
+                type="text"
+                value={agentName}
+                onChange={(e) => setAgentName(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="tone"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Tone
+              </label>
+              <select
+                id="tone"
+                value={tone}
+                onChange={(e) => setTone(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow bg-white"
+              >
+                <option value="professional">Professional</option>
+                <option value="friendly">Friendly & Casual</option>
+                <option value="formal">Formal</option>
+                <option value="empathetic">Empathetic</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="welcome-message"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Welcome Message
+              </label>
+              <textarea
+                id="welcome-message"
+                rows={3}
+                value={welcomeMessage}
+                onChange={(e) => setWelcomeMessage(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow resize-none"
+              />
+            </div>
           </div>
         </section>
 
-        <section className="bg-card rounded-xl border border-gray-100 shadow-sm p-6">
-          <h2 className="text-base font-semibold text-gray-900">Test Defaults</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
-            <Field label="Default agent role"><select value={draft.defaultRole} onChange={(event) => setDraft({ ...draft, defaultRole: event.target.value as AgentRole })} className={inputClass}><option value="airline">Airline Support</option><option value="hospital">Hospital Services</option><option value="police">Police Department</option><option value="custom">Custom Agent</option></select></Field>
-            <Field label="Default persona"><select value={draft.defaultPersona} onChange={(event) => setDraft({ ...draft, defaultPersona: event.target.value as Persona })} className={inputClass}><option value="minor">Minor Client</option><option value="crisis">Crisis Caller</option><option value="refund">Refund Requester</option></select></Field>
-            <Field label="Agent Person voice"><select value={draft.personVoice} onChange={(event) => setDraft({ ...draft, personVoice: event.target.value as SpeechmaticsVoice })} className={inputClass}><VoiceOptions /></select></Field>
-            <Field label="Agent Draft voice"><select value={draft.draftVoice} onChange={(event) => setDraft({ ...draft, draftVoice: event.target.value as SpeechmaticsVoice })} className={inputClass}><VoiceOptions /></select></Field>
+        {/* AI Evaluation Provider */}
+        <section className="bg-card rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
+            <Cpu className="w-4 h-4 text-gray-400" />
+            <h2 className="text-base font-semibold text-gray-900">
+              AI Evaluation Provider
+            </h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div>
+              <label
+                htmlFor="ai-provider"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Evaluation Engine
+              </label>
+              <select
+                id="ai-provider"
+                value={aiProvider}
+                onChange={(e) => setAiProvider(e.target.value as AIProvider)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow bg-white"
+              >
+                <option value="local">Local AI Engine (built-in, no API key needed)</option>
+                <option value="openai">OpenAI (GPT-4o Mini) — requires API key</option>
+                <option value="anthropic">Anthropic (Claude 3 Haiku) — requires API key</option>
+              </select>
+              <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                Local engine works instantly with realistic evaluations. Real AI providers generate more nuanced analysis but require an API key.
+              </p>
+            </div>
+
+            {(aiProvider === "openai" || aiProvider === "anthropic") && (
+              <div>
+                <label
+                  htmlFor="api-key"
+                  className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5"
+                >
+                  <Key className="w-3.5 h-3.5" />
+                  API Key
+                </label>
+                <div className="relative">
+                  <input
+                    id="api-key"
+                    type={showApiKey ? "text" : "password"}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder={
+                      aiProvider === "openai"
+                        ? "sk-..."
+                        : "sk-ant-..."
+                    }
+                    className="w-full px-3.5 py-2.5 pr-10 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow font-mono"
+                  />
+                  <button
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 cursor-pointer"
+                    aria-label={showApiKey ? "Hide API key" : "Show API key"}
+                  >
+                    {showApiKey ? "Hide" : "Show"}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-400 mt-1.5">
+                  Your key is stored in your browser's local storage and never sent to our servers.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <button type="button" onClick={clearKeys} className="text-sm text-red-600 hover:underline">Clear provider keys</button>
-          <button type="button" onClick={save} className="px-5 py-2.5 rounded-lg bg-accent-blue text-white text-sm font-medium hover:bg-blue-600">{saved ? "Saved" : "Save settings"}</button>
+        {/* Notification Preferences */}
+        <section className="bg-card rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
+            <Bell className="w-4 h-4 text-gray-400" />
+            <h2 className="text-base font-semibold text-gray-900">
+              Notification Preferences
+            </h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-700">
+                  Daily Digest
+                </p>
+                <p className="text-xs text-gray-400">
+                  Receive a daily summary of test results
+                </p>
+              </div>
+              <button
+                onClick={() => toggleNotification("dailyDigest")}
+                role="switch"
+                aria-checked={notifications.dailyDigest}
+                aria-label="Toggle daily digest"
+                className={cn(
+                  "relative w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer",
+                  notifications.dailyDigest
+                    ? "bg-accent-blue"
+                    : "bg-gray-200"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200",
+                    notifications.dailyDigest && "translate-x-4"
+                  )}
+                />
+              </button>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-700">
+                  Critical Failures
+                </p>
+                <p className="text-xs text-gray-400">
+                  Instant alerts when a test fails critically
+                </p>
+              </div>
+              <button
+                onClick={() => toggleNotification("criticalFailures")}
+                role="switch"
+                aria-checked={notifications.criticalFailures}
+                aria-label="Toggle critical failures alerts"
+                className={cn(
+                  "relative w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer",
+                  notifications.criticalFailures
+                    ? "bg-accent-blue"
+                    : "bg-gray-200"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200",
+                    notifications.criticalFailures && "translate-x-4"
+                  )}
+                />
+              </button>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-700">
+                  Weekly Report
+                </p>
+                <p className="text-xs text-gray-400">
+                  Detailed weekly risk report via email
+                </p>
+              </div>
+              <button
+                onClick={() => toggleNotification("weeklyReport")}
+                role="switch"
+                aria-checked={notifications.weeklyReport}
+                aria-label="Toggle weekly report"
+                className={cn(
+                  "relative w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer",
+                  notifications.weeklyReport
+                    ? "bg-accent-blue"
+                    : "bg-gray-200"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200",
+                    notifications.weeklyReport && "translate-x-4"
+                  )}
+                />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Save Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={handleSave}
+            className={cn(
+              "flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer",
+              saved
+                ? "bg-accent-green text-white"
+                : "bg-accent-blue text-white hover:bg-blue-600 shadow-sm"
+            )}
+          >
+            <Save className="w-4 h-4" />
+            {saved ? "Saved!" : "Save Settings"}
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-function SecretField({ label, value, visible, onToggle, onChange, placeholder }: { label: string; value: string; visible: boolean; onToggle: () => void; onChange: (value: string) => void; placeholder: string }) {
-  return <div><label className="block text-xs font-medium text-gray-600 mb-1.5">{label}</label><div className="flex gap-2"><input type={visible ? "text" : "password"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className={`${inputClass} flex-1 font-mono`} /><button type="button" onClick={onToggle} className="px-3 rounded-lg border border-gray-200 text-xs text-gray-500 hover:bg-gray-50">{visible ? "Hide" : "Show"}</button></div></div>;
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="block"><span className="block text-xs font-medium text-gray-600 mb-1.5">{label}</span>{children}</label>;
-}
-
-function VoiceOptions() {
-  return <><option value="sarah">Sarah (English UK, female)</option><option value="theo">Theo (English UK, male)</option><option value="megan">Megan (English UK, female)</option><option value="jack">Jack (English US, male)</option></>;
-}
-
-const inputClass = "w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue";
