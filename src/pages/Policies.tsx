@@ -5,11 +5,12 @@ import type { Policy } from "../types";
 import { formatDate, cn } from "../lib/utils";
 
 const categoryColors: Record<string, string> = {
-  Refund: "border-l-accent-blue",
-  Cancellation: "border-l-accent-amber",
-  Medical: "border-l-accent-green",
-  Baggage: "border-l-accent-red",
-  Billing: "border-l-purple-500",
+  KYC: "border-l-accent-blue",
+  Payments: "border-l-accent-amber",
+  "Data Protection": "border-l-accent-green",
+  AML: "border-l-accent-red",
+  Complaints: "border-l-purple-500",
+  Conduct: "border-l-orange-500",
 };
 
 export default function Policies() {
@@ -29,9 +30,9 @@ export default function Policies() {
     <div>
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Refund Policies</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Compliance Policies</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage your company's refund and compensation policies
+            Manage your institution's regulatory and compliance policies
           </p>
         </div>
         <button

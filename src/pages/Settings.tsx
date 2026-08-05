@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { Save, Building2, Bot, Bell } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Save, Building2, Bot, Bell, Sparkles, Key, Cpu } from "lucide-react";
 import { cn } from "../lib/utils";
+import type { AIProvider } from "../engine/evaluator";
 
 export default function Settings() {
-  const [companyName, setCompanyName] = useState("SkyPath Airlines");
-  const [industry, setIndustry] = useState("Airlines");
-  const [agentName, setAgentName] = useState("SkyPath Support Agent");
+  const [companyName, setCompanyName] = useState("Meridian Financial");
+  const [industry, setIndustry] = useState("Banking");
+  const [agentName, setAgentName] = useState("Meridian Support Agent");
   const [tone, setTone] = useState("professional");
   const [welcomeMessage, setWelcomeMessage] = useState(
-    "Welcome to SkyPath Airlines. How can I help you today?"
+    "Welcome to Meridian Financial. How can I help you today?"
   );
   const [saved, setSaved] = useState(false);
   const [notifications, setNotifications] = useState({
@@ -16,6 +17,27 @@ export default function Settings() {
     criticalFailures: true,
     weeklyReport: false,
   });
+
+  // AI Provider settings (stored in localStorage)
+  const [aiProvider, setAiProvider] = useState<AIProvider>(() => {
+    return (localStorage.getItem("voiceguard_ai_provider") as AIProvider) || "local";
+  });
+  const [apiKey, setApiKey] = useState(() => {
+    return localStorage.getItem("voiceguard_api_key") || "";
+  });
+  const [showApiKey, setShowApiKey] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("voiceguard_ai_provider", aiProvider);
+  }, [aiProvider]);
+
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem("voiceguard_api_key", apiKey);
+    } else {
+      localStorage.removeItem("voiceguard_api_key");
+    }
+  }, [apiKey]);
 
   const handleSave = () => {
     setSaved(true);
@@ -143,6 +165,76 @@ export default function Settings() {
                 className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow resize-none"
               />
             </div>
+          </div>
+        </section>
+
+        {/* AI Evaluation Provider */}
+        <section className="bg-card rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
+            <Cpu className="w-4 h-4 text-gray-400" />
+            <h2 className="text-base font-semibold text-gray-900">
+              AI Evaluation Provider
+            </h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div>
+              <label
+                htmlFor="ai-provider"
+                className="block text-sm font-medium text-gray-700 mb-1.5"
+              >
+                Evaluation Engine
+              </label>
+              <select
+                id="ai-provider"
+                value={aiProvider}
+                onChange={(e) => setAiProvider(e.target.value as AIProvider)}
+                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow bg-white"
+              >
+                <option value="local">Local AI Engine (built-in, no API key needed)</option>
+                <option value="openai">OpenAI (GPT-4o Mini) — requires API key</option>
+                <option value="anthropic">Anthropic (Claude 3 Haiku) — requires API key</option>
+              </select>
+              <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                Local engine works instantly with realistic evaluations. Real AI providers generate more nuanced analysis but require an API key.
+              </p>
+            </div>
+
+            {(aiProvider === "openai" || aiProvider === "anthropic") && (
+              <div>
+                <label
+                  htmlFor="api-key"
+                  className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5"
+                >
+                  <Key className="w-3.5 h-3.5" />
+                  API Key
+                </label>
+                <div className="relative">
+                  <input
+                    id="api-key"
+                    type={showApiKey ? "text" : "password"}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder={
+                      aiProvider === "openai"
+                        ? "sk-..."
+                        : "sk-ant-..."
+                    }
+                    className="w-full px-3.5 py-2.5 pr-10 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-blue/20 focus:border-accent-blue transition-shadow font-mono"
+                  />
+                  <button
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 cursor-pointer"
+                    aria-label={showApiKey ? "Hide API key" : "Show API key"}
+                  >
+                    {showApiKey ? "Hide" : "Show"}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-400 mt-1.5">
+                  Your key is stored in your browser's local storage and never sent to our servers.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 

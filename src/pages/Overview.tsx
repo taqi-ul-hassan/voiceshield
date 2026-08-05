@@ -57,7 +57,7 @@ export default function Overview() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
         <p className="text-sm text-gray-500 mt-1">
-          SkyPath Airlines — Voice Agent Performance
+          Meridian Financial — Compliance Guardrail Performance
         </p>
       </div>
 

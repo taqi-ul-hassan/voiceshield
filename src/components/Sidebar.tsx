@@ -59,7 +59,7 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div className="px-5 py-4 border-t border-navy-700/50">
-        <p className="text-navy-500 text-xs">SkyPath Airlines</p>
+        <p className="text-navy-500 text-xs">Meridian Financial</p>
         <p className="text-navy-600 text-[10px]">Demo Environment</p>
       </div>
     </aside>
