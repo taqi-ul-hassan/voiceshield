@@ -28,21 +28,23 @@ export default function KPICard({
       ? "text-accent-green"
       : trend === "down"
         ? "text-accent-red"
-        : "text-gray-400";
+        : "text-slate-400";
 
   return (
-    <div className="bg-card rounded-xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="bg-card rounded-2xl border border-slate-100 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.08)] hover:border-slate-200 transition-all duration-200">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-gray-500 font-medium truncate">{title}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1 tracking-tight">
+          <p className="text-xs uppercase tracking-wider text-slate-500 font-medium truncate">
+            {title}
+          </p>
+          <p className="text-4xl font-bold text-slate-900 mt-2 tracking-tight">
             {value}
           </p>
           {subtitle && (
-            <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>
+            <p className="text-xs text-slate-400 mt-1">{subtitle}</p>
           )}
           {trend && trendValue && (
-            <p className={cn("text-xs font-medium mt-1.5", trendColor)}>
+            <p className={cn("text-xs font-medium mt-2", trendColor)}>
               <span className="mr-0.5">{trendIcon}</span>
               {trendValue}
             </p>
@@ -50,7 +52,7 @@ export default function KPICard({
         </div>
         <div
           className={cn(
-            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ml-3",
+            "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ml-3",
             accentBg
           )}
         >

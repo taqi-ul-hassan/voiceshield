@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 32" fill="none">
+  <defs>
+    <linearGradient id="logoGradientWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <g transform="translate(0, 0)">
+    <path d="M16 2L4 7v8c0 7.18 5.12 13.9 12 16 6.88-2.1 12-8.82 12-16V7L16 2z" fill="url(#logoGradientWhite)"/>
+    <path d="M10 16c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5zm4 0c0-2.5 1.5-4 3-4s3 1.5 3 4-1.5 4-3 4-3-1.5-3-4zm6 0c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5z" fill="white" fill-opacity="0.95"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="38" y="22" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="white" letter-spacing="-0.02em">VoiceShield</text>
+</svg>

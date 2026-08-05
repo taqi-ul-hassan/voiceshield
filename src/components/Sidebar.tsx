@@ -6,7 +6,6 @@ import {
   History,
   BarChart3,
   Settings,
-  Shield,
 } from "lucide-react";
 import { cn } from "../lib/utils";
 
@@ -21,12 +20,14 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-60 h-screen flex-shrink-0 bg-navy-900 flex flex-col overflow-y-auto">
+    <aside className="w-64 h-screen flex-shrink-0 bg-navy-900 flex flex-col overflow-y-auto">
       {/* Logo / Brand */}
       <div className="flex items-center gap-3 px-5 pt-6 pb-8">
-        <div className="w-9 h-9 rounded-lg bg-accent-blue flex items-center justify-center">
-          <Shield className="w-5 h-5 text-white" />
-        </div>
+        <img 
+          src="/logo-icon.svg" 
+          alt="VoiceShield" 
+          className="w-9 h-9"
+        />
         <span className="text-white text-lg font-semibold tracking-tight">
           VoiceShield
         </span>
@@ -43,10 +44,10 @@ export default function Sidebar() {
               end={item.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-navy-800 text-white border-l-[3px] border-accent-blue rounded-l-none"
-                    : "text-navy-300 hover:bg-navy-800/60 hover:text-white border-l-[3px] border-transparent rounded-l-none"
+                    ? "bg-white/10 text-white shadow-sm"
+                    : "text-slate-400 hover:bg-white/5 hover:text-white"
                 )
               }
             >
@@ -58,9 +59,9 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-navy-700/50">
-        <p className="text-navy-500 text-xs">Meridian Financial</p>
-        <p className="text-navy-600 text-[10px]">Demo Environment</p>
+      <div className="px-5 py-4 border-t border-white/10">
+        <p className="text-slate-500 text-xs">Meridian Financial</p>
+        <p className="text-slate-600 text-[10px]">Demo Environment</p>
       </div>
     </aside>
   );

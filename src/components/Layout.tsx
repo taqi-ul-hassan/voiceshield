@@ -6,7 +6,6 @@ import {
   History,
   BarChart3,
   Settings,
-  Shield,
   Menu,
   X,
 } from "lucide-react";
@@ -27,14 +26,16 @@ export default function Layout() {
       {/* Mobile Hamburger */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between bg-navy-900 px-4 py-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-accent-blue flex items-center justify-center">
-            <Shield className="w-4 h-4 text-white" />
-          </div>
+          <img 
+            src="/logo-icon.svg" 
+            alt="VoiceShield" 
+            className="w-8 h-8"
+          />
           <span className="text-white font-semibold text-sm">VoiceShield</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="text-white p-1 rounded-md hover:bg-navy-800 transition-colors"
+          className="text-white p-1 rounded-md hover:bg-white/10 transition-colors"
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -62,10 +63,10 @@ export default function Layout() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={({ isActive }) =>
                     cn(
-                      "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-150",
+                      "flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200",
                       isActive
-                        ? "bg-navy-800 text-white"
-                        : "text-navy-300 hover:bg-navy-800/60 hover:text-white"
+                        ? "bg-white/10 text-white"
+                        : "text-slate-400 hover:bg-white/5 hover:text-white"
                     )
                   }
                 >
@@ -75,9 +76,9 @@ export default function Layout() {
               );
             })}
           </nav>
-          <div className="px-4 py-4 border-t border-navy-700/50 mt-2">
-            <p className="text-navy-500 text-xs">Meridian Financial</p>
-            <p className="text-navy-600 text-[10px]">Demo Environment</p>
+          <div className="px-4 py-4 border-t border-white/10 mt-2">
+            <p className="text-slate-500 text-xs">Meridian Financial</p>
+            <p className="text-slate-600 text-[10px]">Demo Environment</p>
           </div>
         </div>
       )}

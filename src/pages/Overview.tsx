@@ -55,8 +55,8 @@ export default function Overview() {
     <div>
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Overview</h1>
+        <p className="text-base text-slate-500 mt-2">
           Meridian Financial — Compliance Guardrail Performance
         </p>
       </div>
@@ -122,8 +122,8 @@ export default function Overview() {
       )}
 
       {/* Risk Trend Chart */}
-      <div className="bg-card rounded-xl border border-gray-100 shadow-sm p-6 mb-8">
-        <h2 className="text-base font-semibold text-gray-900 mb-4">
+      <div className="bg-card rounded-2xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] p-6 mb-8">
+        <h2 className="text-lg font-semibold text-slate-900 mb-4 tracking-tight">
           Risk Trend — Last {report.riskTrend.length} Runs
         </h2>
         <div className="space-y-2.5">
