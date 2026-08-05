@@ -1,24 +1,87 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# [Ll]ogs
+[Ll]ogs
+*.[Ll][Oo][Gg]
+[Nn][Pp][Mm]-[Dd][Ee][Bb][Uu][Gg].[Ll][Oo][Gg]*
+[Yy][Aa][Rr][Nn]-[Dd][Ee][Bb][Uu][Gg].[Ll][Oo][Gg]*
+[Yy][Aa][Rr][Nn]-[Ee][Rr][Rr][Oo][Rr].[Ll][Oo][Gg]*
+[Pp][Nn][Pp][Mm]-[Dd][Ee][Bb][Uu][Gg].[Ll][Oo][Gg]*
+[Ll][Ee][Rr][Nn][Aa]-[Dd][Ee][Bb][Uu][Gg].[Ll][Oo][Gg]*
 
-node_modules
-dist
-dist-ssr
-*.local
+[Nn][Oo][Dd][Ee]_[Mm][Oo][Dd][Uu][Ll][Ee][Ss]
+[Dd][Ii][Ss][Tt]
+[Dd][Ii][Ss][Tt]-[Ss][Ss][Rr]
+*.[Ll][Oo][Cc][Aa][Ll]
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# [Ee]ditor directories and files
+.[Vv][Ss][Cc][Oo][Dd][Ee]/*
+!.[Vv][Ss][Cc][Oo][Dd][Ee]/[Ee][Xx][Tt][Ee][Nn][Ss][Ii][Oo][Nn][Ss].[Jj][Ss][Oo][Nn]
+.[Ii][Dd][Ee][Aa]
+.[Dd][Ss]_[Ss][Tt][Oo][Rr][Ee]
+*.[Ss][Uu][Oo]
+*.[Nn][Tt][Vv][Ss]*
+*.[Nn][Jj][Ss][Pp][Rr][Oo][Jj]
+*.[Ss][Ll][Nn]
+*.[Ss][Ww]?
+*.[Tt][Ss]
+*.[Jj][Ss]
+*.[Pp][Yy]
+*.[Cc][Ss][Ss]
+*.[Hh][Tt][Mm][Ll]
+*.[Jj][Ss][Oo][Nn]
+*.[Yy][Mm][Ll]
+*.[Yy][Aa][Mm][Ll]
+*.[Mm][Dd]
+*.[Pp][Hh][Pp]
+*.[Ss][Hh]
+*.[Bb][Aa][Ss][Hh]
+*.[Xx][Mm][Ll]
+*.[Pp][Pp][Tt]
+*.[Dd][Oo][Cc][Xx]
+*.[Pp][Dd][Ff]
+
+# Build directories
+[Bb][Uu][Ii][Ll][Dd]
+[Oo][Bb][Jj]
+[Bb][Ii][Nn]
+.[Nn][Ee][Xx][Tt]
+.[Nn][Uu][Xx][Tt]
+.[Cc][Aa][Cc][Hh][Ee]
+.[Vv][Uu][Ee][Pp][Rr][Ee][Ss][Ss]/[Dd][Ii][Ss][Tt]
+
+# Dependency directories
+[Nn][Oo][Dd][Ee]_[Mm][Oo][Dd][Uu][Ll][Ee][Ss]/
+[Vv][Ee][Nn][Vv]/
+[Ee][Nn][Vv]/
+.[Ee][Nn][Vv]
+.[Ee][Nn][Vv].[Ll][Oo][Cc][Aa][Ll]
+.[Ee][Nn][Vv].*.[Ll][Oo][Cc][Aa][Ll]
+
+# IDE and editor files
+*.[Ss][Ww][Pp]
+*.[Ss][Ww][Oo]
+*~
+.[Vv][Ss][Cc][Oo][Dd][Ee]
+.[Ii][Dd][Ee][Aa]
+*.[Ss][Uu][Bb][Ll][Ii][Mm][Ee]-[Pp][Rr][Oo][Jj][Ee][Cc][Tt]
+*.[Ss][Uu][Bb][Ll][Ii][Mm][Ee]-[Ww][Oo][Rr][Kk][Ss][Pp][Aa][Cc][Ee]
+
+# OS files
+.[Dd][Ss]_[Ss][Tt][Oo][Rr][Ee]
+[Tt][Hh][Uu][Mm][Bb][Ss].[Dd][Bb]
+.[Tt][Rr][Aa][Ss][Hh][Ee][Dd]-*
+
+# Test coverage
+[Cc][Oo][Vv][Ee][Rr][Aa][Gg][Ee]/
+.[Nn][Yy][Cc]_[Oo][Uu][Tt][Pp][Uu][Tt]
+
+# Package lock files
+[Pp][Aa][Cc][Kk][Aa][Gg][Ee]-[Ll][Oo][Cc][Kk].[Jj][Ss][Oo][Nn]
+[Yy][Aa][Rr][Nn].[Ll][Oo][Cc][Kk]
+[Pp][Oo][Ee][Tt][Rr][Yy].[Ll][Oo][Cc][Kk]
+[Pp][Ii][Pp][Ff][Ii][Ll][Ee].[Ll][Oo][Cc][Kk]
+
+# Temporary files
+*.[Tt][Mm][Pp]
+*.[Tt][Ee][Mm][Pp]
+*.[Bb][Aa][Kk]
+*.[Ss][Ww][Pp]

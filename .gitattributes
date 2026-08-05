@@ -1,0 +1,32 @@
+# Auto detect text files and normalize line endings to LF
+* text=auto
+
+# Text files
+*.[Tt][Ss] text eol=lf
+*.[Jj][Ss] text eol=lf
+*.[Jj][Ss][Oo][Nn] text eol=lf
+*.[Mm][Dd] text eol=lf
+*.[Yy][Aa][Mm][Ll] text eol=lf
+*.[Yy][Mm][Ll] text eol=lf
+*.[Xx][Mm][Ll] text eol=lf
+*.[Hh][Tt][Mm][Ll] text eol=lf
+*.[Cc][Ss][Ss] text eol=lf
+*.[Pp][Yy] text eol=lf
+*.[Ss][Hh] text eol=lf
+*.[Bb][Aa][Ss][Hh] text eol=lf
+*.[Pp][Hh][Pp] text eol=lf
+*.[Pp][Pp][Tt] text eol=lf
+*.[Dd][Oo][Cc][Xx] text eol=lf
+*.[Pp][Dd][Ff] text eol=lf
+
+# Binary files
+*.[Bb][Ii][Nn] binary
+*.[Ee][Xx][Ee] binary
+*.[Dd][Ll][Ll] binary
+*.[Ss][Oo] binary
+*.[Dd][Yy][Ll][Ii][Bb] binary
+
+# Git files
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gitmodules text eol=lf
