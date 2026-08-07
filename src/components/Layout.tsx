@@ -1,12 +1,12 @@
-import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, Eye } from "lucide-react";
+import { Eye, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { cn } from "../lib/utils";
-import Sidebar from "./Sidebar";
-import Logo from "./Logo";
-import { ModeSwitcher } from "./AppearanceControls";
-import { navItems, devOnlyPaths } from "./nav-items";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAppearance } from "../features/appearance/appearance";
+import { cn } from "../lib/utils";
+import { ModeSwitcher } from "./AppearanceControls";
+import Logo from "./Logo";
+import { devOnlyPaths, navItems } from "./nav-items";
+import Sidebar from "./Sidebar";
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -74,8 +74,8 @@ export default function Layout() {
           </nav>
           <div className="px-4 py-4 border-t border-app-border mt-2 space-y-2">
             <ModeSwitcher size="sm" />
-            <p className="text-app-muted text-xs pt-2">Meridian Financial</p>
-            <p className="text-app-muted/70 text-[10px]">Demo Environment</p>
+            <p className="text-app-muted text-xs font-semibold tracking-tight pt-2">VoiceGate</p>
+            <p className="text-app-muted/70 text-[10px]">Voice Compliance QA</p>
           </div>
         </div>
       )}
@@ -87,7 +87,7 @@ export default function Layout() {
           "lg:pt-0 pt-14" // top padding on mobile for fixed header
         )}
       >
-        <div className="p-5 sm:p-8 lg:p-10 pb-16 max-w-6xl mx-auto">
+        <div className="p-5 sm:p-8 lg:p-10 pb-20 max-w-6xl mx-auto">
           {isPublic && isDevBlocked ? <PublicGate onSwitch={() => setMode("developer")} /> : <Outlet />}
         </div>
       </main>

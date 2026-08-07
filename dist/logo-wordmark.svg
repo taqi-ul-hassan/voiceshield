@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 32" fill="none">
+  <defs>
+    <linearGradient id="wsWordmarkAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B76E79"/>
+      <stop offset="100%" stop-color="#8a4d58"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon -->
+  <g transform="translate(0, 0)">
+    <path d="M16 2C9.6 2 5.6 4.5 5.6 8.6v5.7c0 7.6 4.5 13.1 10.4 16 5.9-2.9 10.4-8.4 10.4-16V8.6C26.4 4.5 22.4 2 16 2z" fill="url(#wsWordmarkAccent)"/>
+    <circle cx="16" cy="8.4" r="1.5" fill="#FFFFFF"/>
+    <rect x="11.1" y="15.4" width="2.8" height="5.4" rx="1.4" fill="#FFFFFF" fill-opacity="0.95"/>
+    <rect x="14.6" y="11.6" width="2.8" height="11.2" rx="1.4" fill="#FFFFFF" fill-opacity="0.95"/>
+    <rect x="18.1" y="15.4" width="2.8" height="5.4" rx="1.4" fill="#FFFFFF" fill-opacity="0.95"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="36" y="22" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1e293b" letter-spacing="-0.02em">VoiceShield</text>
+</svg>

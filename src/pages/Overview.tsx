@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { AlertTriangle, BarChart3, TrendingUp, XCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import KPICard from "../components/KPICard";
 import StatusBadge from "../components/StatusBadge";
 import { useStoredRuns } from "../features/voice-audit/storage";
@@ -23,10 +23,10 @@ export default function Overview() {
 
   return (
     <div className="space-y-8">
-      <div className="mb-2">
+      <header className="mb-2">
         <h1 className="text-3xl font-bold text-app-fg tracking-tight">Overview</h1>
         <p className="text-base text-app-muted mt-2">How your voice agents are holding up against the EU AI Act</p>
-      </div>
+      </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
         <KPICard title="Total Tests" value={runs.length} icon={BarChart3} accentColor="text-ab" accentBg="bg-ab-soft" />

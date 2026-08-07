@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle2, ChevronDown, ChevronUp, Download, ExternalLink, FileText, Plus, Shield, Trash2, Upload, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { euActArticles } from "../data/eu-act";
-import { CustomPolicyRule, deleteCustomPolicy, getCustomPolicies, saveCustomPolicy } from "../features/voice-audit/custom-policies";
 import { commitAcceptedCorpus, generateCompliantSampleCorpus, getRejectionLogs, RejectionLogEvent, scanCorpusFile, ScanResult } from "../features/voice-audit/corpus-scanner";
+import { CustomPolicyRule, deleteCustomPolicy, getCustomPolicies, saveCustomPolicy } from "../features/voice-audit/custom-policies";
 
 export default function Policies() {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -109,8 +109,8 @@ export default function Policies() {
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">EU AI Act & Corpus Policies</h1>
-          <p className="text-sm text-muted mt-1">Regulatory compliance frameworks, organization guardrails & client-side corpus ingestion</p>
+          <h1 className="text-3xl font-bold text-app-fg tracking-tight">EU AI Act &amp; Corpus Policies</h1>
+          <p className="text-base text-app-muted mt-2">Regulatory compliance frameworks, organisation guardrails &amp; client-side corpus ingestion</p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <button

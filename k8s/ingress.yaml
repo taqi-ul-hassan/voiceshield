@@ -1,0 +1,34 @@
+# VoiceShield — Kubernetes Ingress (optional)
+# Edit the host to match your domain before applying.
+#
+# Requires an ingress controller (e.g. nginx-ingress or Traefik).
+# For TLS, use cert-manager or add your own TLS secret.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voiceshield
+  namespace: voiceshield
+  labels:
+    app.kubernetes.io/name: voiceshield
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: voiceshield.example.com   # ← replace with your domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: voiceshield
+                port:
+                  name: http
+  # TLS (optional — uncomment and set secretName)
+  # tls:
+  #   - hosts:
+  #       - voiceshield.example.com
+  #     secretName: voiceshield-tls

@@ -1,0 +1,100 @@
+# VoiceShield — Kubernetes Deployment + Service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voiceshield
+  namespace: voiceshield
+  labels:
+    app.kubernetes.io/name: voiceshield
+    app.kubernetes.io/version: "2026.08.01.00"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: voiceshield
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: voiceshield
+    spec:
+      # Run as non-root (matches Dockerfile UID 1000)
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: voiceshield
+          image: voiceshield:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: PORT
+              value: "8080"
+            - name: AIML_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: voiceshield-secrets
+                  key: aiml-api-key
+            - name: SPEECHMATICS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: voiceshield-secrets
+                  key: speechmatics-api-key
+            # Key rotation defaults — override as needed
+            - name: KEY_ROTATION_INTERVAL
+              value: "6h"
+            - name: KEY_ROTATION_FAILURE_THRESHOLD
+              value: "3"
+            - name: RUNTIME_KEY_TTL
+              value: "6h"
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          # Read-only root filesystem for security hardening
+          securityContext:
+            readOnlyRootFilesystem: false   # FastAPI writes temp files
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voiceshield
+  namespace: voiceshield
+  labels:
+    app.kubernetes.io/name: voiceshield
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: voiceshield
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP

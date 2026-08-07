@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SpeechButton, SpeechmaticsAudioPanel } from "../features/voice-audit/speechmatics";
 import { advanceConversation, createConversation, evaluateConversation, submitCallerTurn } from "../features/voice-audit/conversation";
-import { saveConversationRun } from "../features/voice-audit/storage";
 import { useRuntimeSettings } from "../features/voice-audit/runtime";
+import { SpeechButton, SpeechmaticsAudioPanel } from "../features/voice-audit/speechmatics";
+import { saveConversationRun } from "../features/voice-audit/storage";
 import type { AgentRole, Conversation, Persona } from "../features/voice-audit/types";
 
 const roleLabels: Record<AgentRole, string> = {
@@ -87,16 +87,16 @@ export default function TestBench() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-app-fg">Test Bench</h1>
-        <p className="text-sm text-app-muted mt-1">Run a conversation, then see exactly where your agent stands against the EU AI Act.</p>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-app-fg tracking-tight">Test Bench</h1>
+        <p className="text-base text-app-muted mt-2">Run a conversation, then see exactly where your agent stands against the EU AI Act.</p>
+      </header>
 
       {!conversation ? (
         <section className="bg-app-card rounded-2xl border border-app-border shadow-sm p-6 max-w-3xl">
           <div className="mb-6">
             <h2 className="text-base font-semibold text-app-fg">Start a new test</h2>
-            <p className="text-sm text-app-muted mt-1">Agent Person will challenge your agent with a realistic — and occasionally tricky — caller.</p>
+            <p className="text-sm text-app-muted mt-1">A simulated caller will challenge your agent with realistic — and occasionally adversarial — scenarios.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

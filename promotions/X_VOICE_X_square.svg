@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img"
+     aria-label="X Voice X — Square icon (Rose)">
+  <title>X Voice X Icon</title>
+  <rect width="512" height="512" rx="96" fill="#ffaec9"/>
+
+  <!-- X Voice X monogram: compact square layout -->
+  <!-- Left mini-X -->
+  <line x1="32"  y1="80"  x2="198" y2="432" stroke="#000" stroke-width="52" stroke-linecap="round"/>
+  <line x1="198" y1="80"  x2="32"  y2="432" stroke="#000" stroke-width="52" stroke-linecap="round"/>
+  <polygon points="115,235 135,256 115,277 95,256" fill="#b76e79"/>
+
+  <!-- Waveform -->
+  <polyline points="210,256 240,256 260,140 285,372 310,170 330,310 354,256 384,256"
+            fill="none" stroke="#000" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right mini-X -->
+  <line x1="314" y1="80"  x2="480" y2="432" stroke="#000" stroke-width="52" stroke-linecap="round"/>
+  <line x1="480" y1="80"  x2="314" y2="432" stroke="#000" stroke-width="52" stroke-linecap="round"/>
+  <polygon points="397,235 417,256 397,277 377,256" fill="#b76e79"/>
+</svg>

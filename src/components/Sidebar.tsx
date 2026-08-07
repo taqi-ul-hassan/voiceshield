@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { cn } from "../lib/utils";
-import Logo from "./Logo";
-import { ModeSwitcher, ThemeSwitcher } from "./AppearanceControls";
-import { navItems } from "./nav-items";
 import { useAppearance } from "../features/appearance/appearance";
+import { cn } from "../lib/utils";
+import { ModeSwitcher, ThemeSwitcher } from "./AppearanceControls";
+import Logo from "./Logo";
+import { navItems } from "./nav-items";
 
 export default function Sidebar() {
   const { isPublic } = useAppearance();
@@ -47,8 +47,8 @@ export default function Sidebar() {
         <ModeSwitcher size="sm" />
         <ThemeSwitcher size="sm" />
         <div className="pt-2 mt-1 border-t border-app-border">
-          <p className="text-app-muted text-xs">Meridian Financial</p>
-          <p className="text-app-muted/70 text-[10px]">Demo Environment</p>
+          <p className="text-app-muted text-xs font-semibold tracking-tight">VoiceGate</p>
+          <p className="text-app-muted/70 text-[10px]">Voice Compliance QA</p>
         </div>
       </div>
     </aside>

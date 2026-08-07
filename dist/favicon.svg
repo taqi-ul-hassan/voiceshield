@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="faviconAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B76E79"/>
+      <stop offset="100%" stop-color="#8a4d58"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="#1E293B"/>
+  <path d="M16 6C11.8 6 8.6 8 8.6 11.4v4.9c0 6.5 3.8 11.2 7.4 13.7 3.6-2.5 7.4-7.2 7.4-13.7v-4.9C23.4 8 20.2 6 16 6z" fill="url(#faviconAccent)"/>
+  <circle cx="16" cy="11" r="1.4" fill="#FFFFFF"/>
+  <rect x="11.9" y="16.8" width="2.6" height="4.8" rx="1.3" fill="#FFFFFF" fill-opacity="0.95"/>
+  <rect x="14.7" y="13.6" width="2.6" height="9.6" rx="1.3" fill="#FFFFFF" fill-opacity="0.95"/>
+  <rect x="17.5" y="16.8" width="2.6" height="4.8" rx="1.3" fill="#FFFFFF" fill-opacity="0.95"/>
+</svg>

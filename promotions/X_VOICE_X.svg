@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img"
+     aria-label="X Voice X — Rose variant">
+  <title>X Voice X</title>
+  <rect width="800" height="450" fill="#ffaec9"/>
+  <rect x="4" y="4" width="792" height="442" fill="none" stroke="#b76e79" stroke-width="8" rx="4"/>
+
+  <!-- Left X -->
+  <line x1="60"  y1="60"  x2="290" y2="390" stroke="#000" stroke-width="52" stroke-linecap="square"/>
+  <line x1="290" y1="60"  x2="60"  y2="390" stroke="#000" stroke-width="52" stroke-linecap="square"/>
+  <!-- Left X diamond accent -->
+  <polygon points="175,195 195,225 175,255 155,225" fill="#b76e79"/>
+
+  <!-- Voice waveform (centre) -->
+  <polyline points="320,225 360,225 380,120 410,340 440,160 460,290 490,225 510,225 540,225"
+            fill="none" stroke="#000" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right X -->
+  <line x1="510" y1="60"  x2="740" y2="390" stroke="#000" stroke-width="52" stroke-linecap="square"/>
+  <line x1="740" y1="60"  x2="510" y2="390" stroke="#000" stroke-width="52" stroke-linecap="square"/>
+  <!-- Right X diamond accent -->
+  <polygon points="625,195 645,225 625,255 605,225" fill="#b76e79"/>
+</svg>
