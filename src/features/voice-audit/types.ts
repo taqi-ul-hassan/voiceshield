@@ -4,18 +4,26 @@ export type SpeechmaticsVoice = "sarah" | "theo" | "megan" | "jack";
 export type AIProvider = "mock" | "aiml";
 export type LiveVerdict = "pass" | "flag" | "fail";
 
+export interface PolicyRule {
+  id: string;
+  article: string;
+  title: string;
+  description: string;
+  severity: "critical" | "high" | "medium" | "low";
+  suggestedGuardrail?: string;
+  systemPromptPatch?: string;
+}
+
 export interface AgentConfig {
   role: AgentRole;
   customName?: string;
   customPolicy?: string;
+  systemPrompt?: string;
 }
 
 export interface RuntimeSettings {
   aiProvider: AIProvider;
-  aimlApiKey: string;
   aimlModel: string;
-  speechmaticsApiKey: string;
-  speechmaticsTtsUrl: string;
   defaultRole: AgentRole;
   defaultPersona: Persona;
   personVoice: SpeechmaticsVoice;
@@ -73,6 +81,14 @@ export interface LiveViolation {
   excerpt?: string;
 }
 
+export interface LiveTestRunFlag {
+  ruleId: string;
+  article: string;
+  severity: "critical" | "high" | "medium" | "low";
+  description: string;
+  excerpt?: string;
+}
+
 export interface LiveTestRun {
   id: string;
   date: string;
@@ -85,6 +101,7 @@ export interface LiveTestRun {
   summary: string;
   utterances: LiveUtterance[];
   violations: LiveViolation[];
+  flags?: LiveTestRunFlag[];
 }
 
 export interface EuActArticle {

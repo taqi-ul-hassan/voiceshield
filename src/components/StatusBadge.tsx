@@ -1,6 +1,6 @@
 import { CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 import { cn } from "../lib/utils";
-import type { Verdict } from "../types";
+import type { LiveVerdict as Verdict } from "../features/voice-audit/types";
 
 type Size = "sm" | "md" | "default";
 
@@ -28,20 +28,20 @@ const config: Record<
   { bg: string; text: string; label: string; icon: typeof CheckCircle }
 > = {
   pass: {
-    bg: "bg-green-50 text-accent-green border-green-200",
-    text: "text-accent-green",
+    bg: "bg-pass-soft text-pass-text border-pass-text/25",
+    text: "text-pass-text",
     label: "Pass",
     icon: CheckCircle,
   },
   flag: {
-    bg: "bg-amber-50 text-accent-amber border-amber-200",
-    text: "text-accent-amber",
+    bg: "bg-flag-soft text-flag-text border-flag-text/25",
+    text: "text-flag-text",
     label: "Flag",
     icon: AlertTriangle,
   },
   fail: {
-    bg: "bg-red-50 text-accent-red border-red-200",
-    text: "text-accent-red",
+    bg: "bg-fail-soft text-fail-text border-fail-text/25",
+    text: "text-fail-text",
     label: "Fail",
     icon: XCircle,
   },

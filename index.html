@@ -5,6 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VoiceShield — AI Red-Teaming for Voice Agents</title>
+    <script>
+      // Apply the persisted theme variant before first paint to avoid a flash.
+      (function () {
+        try {
+          var variant =
+            window.localStorage.getItem("voiceshield:theme-variant") === "b"
+              ? "theme-b"
+              : "theme-a";
+          document.documentElement.classList.add(variant);
+          document.documentElement.style.colorScheme =
+            variant === "theme-b" ? "dark" : "light";
+        } catch (e) {
+          document.documentElement.classList.add("theme-a");
+        }
+      })();
+    </script>
+    <script type="module" src="/natively-runtime.js"></script>
   </head>
   <body>
     <div id="root"></div>

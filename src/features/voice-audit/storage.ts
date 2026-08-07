@@ -16,6 +16,57 @@ export function getStoredRuns(): LiveTestRun[] {
   }
 }
 
+export function saveRunToStorage(run: LiveTestRun): void {
+  const runs = [run, ...getStoredRuns().filter((r) => r.id !== run.id)].slice(0, 100);
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
+    window.dispatchEvent(new Event(CHANGE_EVENT));
+  }
+}
+
+export function clearStoredRuns(): void {
+  if (typeof window !== "undefined") {
+    window.localStorage.removeItem(STORAGE_KEY);
+    window.dispatchEvent(new Event(CHANGE_EVENT));
+  }
+}
+
+export function exportBackupJSON(): string {
+  const runs = getStoredRuns();
+  return JSON.stringify(
+    {
+      version: "2.0",
+      exportDate: new Date().toISOString(),
+      runsCount: runs.length,
+      runs,
+    },
+    null,
+    2
+  );
+}
+
+export function importBackupJSON(jsonString: string): { success: boolean; count: number; error?: string } {
+  try {
+    const parsed = JSON.parse(jsonString);
+    if (!parsed || !Array.isArray(parsed.runs)) {
+      return { success: false, count: 0, error: "Invalid VoiceShield backup schema" };
+    }
+    const current = getStoredRuns();
+    const map = new Map<string, LiveTestRun>();
+    for (const r of [...parsed.runs, ...current]) {
+      if (r && r.id) map.set(r.id, r);
+    }
+    const combined = Array.from(map.values());
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(combined));
+    window.dispatchEvent(new Event(CHANGE_EVENT));
+    return { success: true, count: parsed.runs.length };
+  } catch (err) {
+    return { success: false, count: 0, error: (err as Error).message };
+  }
+}
+
+/** Vault functions were removed — provider keys now live only on the server (server/proxy.ts). */
+
 export function saveConversationRun(conversation: Conversation): LiveTestRun {
   if (!conversation.result) throw new Error("Cannot save a conversation without an evaluation result.");
 
@@ -55,11 +106,7 @@ export function saveConversationRun(conversation: Conversation): LiveTestRun {
     })),
   };
 
-  const runs = [run, ...getStoredRuns().filter((existing) => existing.id !== run.id)].slice(0, 50);
-  if (typeof window !== "undefined") {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
-    window.dispatchEvent(new Event(CHANGE_EVENT));
-  }
+  saveRunToStorage(run);
   return run;
 }
 

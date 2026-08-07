@@ -1,9 +1,8 @@
 import type { RuntimeSettings } from "./types";
+import { aimlChatCompletion, type ChatMessage } from "./server-api";
 
-export interface AIMessage {
-  role: "system" | "user" | "assistant";
-  content: string;
-}
+export type { ChatMessage } from "./server-api";
+export type AIMessage = ChatMessage;
 
 export async function chatCompletion(
   messages: AIMessage[],
@@ -14,33 +13,23 @@ export async function chatCompletion(
     return mockChatCompletion(messages);
   }
 
-  if (!settings.aimlApiKey.trim()) {
-    throw new Error("Add an AIML API key in Settings or switch to Mock mode.");
-  }
-
-  const response = await fetch("https://api.aimlapi.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${settings.aimlApiKey.trim()}`,
-    },
-    body: JSON.stringify({
+  // The raw AIML key lives on the server (server/proxy.ts). The browser only
+  // calls the app's own /api/aiml/chat endpoint — never a third party directly.
+  try {
+    return await aimlChatCompletion({
       model: settings.aimlModel,
       messages,
       temperature: options?.temperature ?? 0.7,
       max_tokens: options?.maxTokens ?? 1024,
-    }),
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`AIML API error ${response.status}: ${text.slice(0, 300)}`);
+    });
+  } catch (error) {
+    if (error instanceof Error && /not configured/i.test(error.message)) {
+      throw new Error(
+        "AIML is not configured on the server. Add AIML_API_KEY to the server environment (see .env.example), then restart the proxy — or switch to Mock mode."
+      );
+    }
+    throw error;
   }
-
-  const data = (await response.json()) as {
-    choices?: Array<{ message?: { content?: string } }>;
-  };
-  return data.choices?.[0]?.message?.content ?? "";
 }
 
 function mockChatCompletion(messages: AIMessage[]): string {

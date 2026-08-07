@@ -1,0 +1,11 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "executablePath": "/usr/bin/chromium",
+      "chromiumSandbox": false,
+      "headless": true,
+      "args": ["--no-sandbox", "--disable-dev-shm-usage"]
+    }
+  }
+}

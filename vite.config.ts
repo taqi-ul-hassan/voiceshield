@@ -15,6 +15,8 @@ const svgImportPlugin = () => ({
   },
 });
 
+const PROXY_TARGET = process.env.PROXY_TARGET ?? 'http://localhost:8787';
+
 // https://vite.dev/config/
 export default defineConfig(() => ({
   plugins: [
@@ -37,5 +39,12 @@ export default defineConfig(() => ({
     host: true,
     allowedHosts: true as true,
     hmr: false,
+    proxy: {
+      // Forward all /api/* calls to the BFF proxy during development.
+      '/api': {
+        target: PROXY_TARGET,
+        changeOrigin: true,
+      },
+    },
   },
 }))

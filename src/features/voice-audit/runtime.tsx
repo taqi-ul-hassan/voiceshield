@@ -3,10 +3,7 @@ import type { RuntimeSettings } from "./types";
 
 export const DEFAULT_RUNTIME_SETTINGS: RuntimeSettings = {
   aiProvider: "mock",
-  aimlApiKey: "",
   aimlModel: "deepseek/deepseek-v4-flash",
-  speechmaticsApiKey: "",
-  speechmaticsTtsUrl: "https://preview.tts.speechmatics.com",
   defaultRole: "airline",
   defaultPersona: "minor",
   personVoice: "megan",
@@ -16,7 +13,6 @@ export const DEFAULT_RUNTIME_SETTINGS: RuntimeSettings = {
 interface RuntimeSettingsContextValue {
   settings: RuntimeSettings;
   updateSettings: (updates: Partial<RuntimeSettings>) => void;
-  clearProviderKeys: () => void;
 }
 
 const RuntimeSettingsContext = createContext<RuntimeSettingsContextValue | null>(null);
@@ -28,12 +24,6 @@ export function RuntimeSettingsProvider({ children }: PropsWithChildren) {
     () => ({
       settings,
       updateSettings: (updates) => setSettings((current) => ({ ...current, ...updates })),
-      clearProviderKeys: () =>
-        setSettings((current) => ({
-          ...current,
-          aimlApiKey: "",
-          speechmaticsApiKey: "",
-        })),
     }),
     [settings]
   );

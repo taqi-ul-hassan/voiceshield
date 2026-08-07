@@ -7,8 +7,8 @@ interface KPICardProps {
   trend?: "up" | "down" | "neutral";
   trendValue?: string;
   icon: LucideIcon;
-  accentColor: string; // Tailwind class like "text-accent-blue"
-  accentBg: string; // Tailwind class like "bg-blue-50"
+  accentColor: string; // Tailwind class like "text-accent-green"
+  accentBg: string; // Tailwind class like "bg-green-50"
   subtitle?: string;
 }
 
@@ -25,27 +25,27 @@ export default function KPICard({
   const trendIcon = trend === "up" ? "↑" : trend === "down" ? "↓" : "→";
   const trendColor =
     trend === "up"
-      ? "text-accent-green"
+      ? "text-pass-text"
       : trend === "down"
-        ? "text-accent-red"
-        : "text-slate-400";
+        ? "text-fail-text"
+        : "text-app-muted";
 
   return (
-    <div className="bg-card rounded-2xl border border-slate-100 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.08)] hover:border-slate-200 transition-all duration-200">
+    <div className="bg-app-card rounded-2xl border border-app-border p-6 shadow-sm transition-all duration-200 hover:bg-app-card-hover hover:border-app-border-strong hover:-translate-y-0.5">
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-xs uppercase tracking-wider text-slate-500 font-medium truncate">
+          <p className="text-xs uppercase tracking-wider text-app-muted font-medium truncate">
             {title}
           </p>
-          <p className="text-4xl font-bold text-slate-900 mt-2 tracking-tight">
+          <p className="text-4xl font-bold text-app-fg mt-2 tracking-tight">
             {value}
           </p>
           {subtitle && (
-            <p className="text-xs text-slate-400 mt-1">{subtitle}</p>
+            <p className="text-xs text-app-muted mt-1">{subtitle}</p>
           )}
           {trend && trendValue && (
             <p className={cn("text-xs font-medium mt-2", trendColor)}>
-              <span className="mr-0.5">{trendIcon}</span>
+              <span className="mr-0.5" aria-hidden="true">{trendIcon}</span>
               {trendValue}
             </p>
           )}
