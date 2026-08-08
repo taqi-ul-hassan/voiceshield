@@ -71,17 +71,28 @@ export default function Settings() {
         </section>
 
         <section className="bg-app-card rounded-2xl border border-app-border shadow-sm p-6">
-          <div className="flex items-start gap-2.5 mb-4">
-            <KeyRound className="mt-0.5 h-4 w-4 shrink-0 text-ab" aria-hidden="true" />
-            <div>
-              <h2 className="text-base font-semibold text-app-fg">Provider keys</h2>
-              <p className="text-xs text-app-muted mt-1">
-                Paste your own provider keys right here — no need to touch server files. Keys are sent to the app's
-                proxy, held in server memory for this session (up to 6 hours), and used to call providers on the app's
-                behalf. They are never written to disk or this browser, and never shown back to you. Keys rotate
-                automatically when the server is configured with a key pool.
-              </p>
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-2.5">
+              <KeyRound className="mt-0.5 h-4 w-4 shrink-0 text-ab" aria-hidden="true" />
+              <div>
+                <h2 className="text-base font-semibold text-app-fg">Provider keys</h2>
+                <p className="text-xs text-app-muted mt-1">
+                  Paste your own provider keys right here — no need to touch server files. Keys are sent to the app's
+                  proxy, held in server memory for this session (up to 6 hours), and used to call providers on the app's
+                  behalf. They are never written to disk or this browser, and never shown back to you. Keys rotate
+                  automatically when the server is configured with a key pool.
+                </p>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={refreshStatus}
+              disabled={!status && !statusError}
+              className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-app-border bg-app-card px-3 py-1.5 text-xs font-medium text-app-fg shadow-sm transition-all duration-150 hover:bg-app-card-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+            >
+              <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+              Refresh status
+            </button>
           </div>
 
           {statusError ? (
