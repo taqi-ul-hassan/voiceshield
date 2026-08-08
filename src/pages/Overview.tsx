@@ -1,4 +1,4 @@
-import { AlertTriangle, BarChart3, TrendingUp, XCircle } from "lucide-react";
+import { AlertTriangle, BarChart3, FileText, PlayCircle, TrendingUp, XCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import KPICard from "../components/KPICard";
 import StatusBadge from "../components/StatusBadge";
@@ -23,9 +23,29 @@ export default function Overview() {
 
   return (
     <div className="space-y-8">
-      <header className="mb-2">
-        <h1 className="text-3xl font-bold text-app-fg tracking-tight">Overview</h1>
-        <p className="text-base text-app-muted mt-2">How your voice agents are holding up against the EU AI Act</p>
+      <header className="mb-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-app-fg tracking-tight">Overview</h1>
+          <p className="text-base text-app-muted mt-2">How your voice agents are holding up against the EU AI Act</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => navigate("/test-bench")}
+            className="inline-flex items-center gap-2 rounded-full bg-ab px-4 py-2 text-sm font-medium text-ab-fg shadow-sm transition-all duration-150 hover:opacity-90 active:scale-[0.97] cursor-pointer"
+          >
+            <PlayCircle className="h-4 w-4" aria-hidden="true" />
+            Run test
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("/risk-report")}
+            className="inline-flex items-center gap-2 rounded-full border border-app-border bg-app-card px-4 py-2 text-sm font-medium text-app-fg shadow-sm transition-all duration-150 hover:bg-app-card-hover active:scale-[0.97] cursor-pointer"
+          >
+            <FileText className="h-4 w-4" aria-hidden="true" />
+            Risk report
+          </button>
+        </div>
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-2">
@@ -85,7 +105,18 @@ export default function Overview() {
                 <thead><tr className="border-b border-app-border"><th className={th}>Run ID</th><th className={th}>Agent</th><th className={th}>Persona</th><th className={th}>Date</th><th className={th}>Verdict</th></tr></thead>
                 <tbody>
                   {recentRuns.map((run) => (
-                    <tr key={run.id} onClick={() => navigate(`/test-runs/${run.id}`)} className="border-b border-app-border hover:bg-app-soft cursor-pointer transition-colors duration-150">
+                    <tr
+                      key={run.id}
+                      tabIndex={0}
+                      onClick={() => navigate(`/test-runs/${run.id}`)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          navigate(`/test-runs/${run.id}`);
+                        }
+                      }}
+                      className="border-b border-app-border hover:bg-app-soft focus-visible:bg-app-soft cursor-pointer transition-colors duration-150"
+                    >
                       <td className="px-6 py-3.5 text-xs font-mono text-app-muted">{shortId(run.id)}</td>
                       <td className="px-6 py-3.5 text-sm text-app-fg">{roleLabels[run.agentConfig.role]}</td>
                       <td className="px-6 py-3.5 text-sm text-app-muted capitalize">{run.persona}</td>
