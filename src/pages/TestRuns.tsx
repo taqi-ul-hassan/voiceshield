@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { ClipboardList } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import StatusBadge from "../components/StatusBadge";
 import { useStoredRuns } from "../features/voice-audit/storage";
 import type { AgentRole } from "../features/voice-audit/types";
@@ -18,10 +18,10 @@ export default function TestRuns() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-app-fg">Test Runs</h1>
-        <p className="text-sm text-app-muted mt-1">Every conversation you've run, saved in this browser</p>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-app-fg tracking-tight">Test Runs</h1>
+        <p className="text-base text-app-muted mt-2">Every conversation you've run, saved in this browser</p>
+      </header>
 
       {runs.length === 0 ? (
         <div className="text-center py-20 bg-app-card rounded-2xl border border-app-border shadow-sm">

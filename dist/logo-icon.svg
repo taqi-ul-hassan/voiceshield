@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape -->
+  <path d="M16 2L4 7v8c0 7.18 5.12 13.9 12 16 6.88-2.1 12-8.82 12-16V7L16 2z" fill="url(#logoGradient)"/>
+  <!-- Voice waveform inside shield -->
+  <path d="M10 16c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5zm4 0c0-2.5 1.5-4 3-4s3 1.5 3 4-1.5 4-3 4-3-1.5-3-4zm6 0c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5z" fill="white" fill-opacity="0.95"/>
+</svg>

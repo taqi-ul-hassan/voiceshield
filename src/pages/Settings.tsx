@@ -1,20 +1,20 @@
+import { Clock, Eye, EyeOff, KeyRound, RefreshCw, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff, KeyRound, RefreshCw, ShieldCheck, ShieldAlert, Clock } from "lucide-react";
+import { ModeSwitcher, ThemeSwitcher } from "../components/AppearanceControls";
 import { useRuntimeSettings } from "../features/voice-audit/runtime";
 import {
-  fetchProviderStatus,
-  setProviderKey,
-  clearProviderKey,
-  rotateProviderKey,
-  type ProviderKeyId,
-  type ProviderKeySource,
-  type ProviderRotation,
-  type ProviderStatus,
-  type RotationEvent,
-  type RotationReason,
+    clearProviderKey,
+    fetchProviderStatus,
+    rotateProviderKey,
+    setProviderKey,
+    type ProviderKeyId,
+    type ProviderKeySource,
+    type ProviderRotation,
+    type ProviderStatus,
+    type RotationEvent,
+    type RotationReason,
 } from "../features/voice-audit/server-api";
 import type { AgentRole, AIProvider, Persona, SpeechmaticsVoice } from "../features/voice-audit/types";
-import { ModeSwitcher, ThemeSwitcher } from "../components/AppearanceControls";
 
 export default function Settings() {
   const { settings, updateSettings } = useRuntimeSettings();
@@ -48,10 +48,10 @@ export default function Settings() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-app-fg">Settings</h1>
-        <p className="text-sm text-app-muted mt-1">Tune the demo and connect your providers — everything saves to this browser.</p>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-app-fg tracking-tight">Settings</h1>
+        <p className="text-base text-app-muted mt-2">Configure providers, appearance, and default test parameters. Changes persist in this browser.</p>
+      </header>
 
       <div className="max-w-2xl space-y-6">
         <section className="bg-app-card rounded-2xl border border-app-border shadow-sm p-6">

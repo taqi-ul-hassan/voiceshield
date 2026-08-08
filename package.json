@@ -9,7 +9,8 @@
     "dev:proxy": "tsx server/proxy.ts",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "serve:python": "python serve.py"
   },
   "dependencies": {
     "@speechmatics/browser-audio-input": "^2.0.4",

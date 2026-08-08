@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useStoredRuns } from "../features/voice-audit/storage";
 import type { AgentRole } from "../features/voice-audit/types";
 
@@ -34,10 +34,10 @@ export default function RiskReport() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-app-fg">Risk Report</h1>
-        <p className="text-sm text-app-muted mt-1">A friendly read on how your agents are doing, across all runs</p>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold text-app-fg tracking-tight">Risk Report</h1>
+        <p className="text-base text-app-muted mt-2">Compliance posture across all test runs</p>
+      </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <SummaryCard label="Total tests" value={runs.length} color="text-app-fg" />

@@ -134,6 +134,28 @@ body {
   outline-offset: 2px;
 }
 
+/* Theme-aware scrollbars (Webkit / Blink) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--vs-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--vs-border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vs-accent);
+}
+
+/* Improved text selection colour */
+::selection {
+  background: var(--vs-accent-soft);
+  color: var(--vs-fg);
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
