@@ -18,15 +18,23 @@
  */
 import { execFileSync } from "node:child_process";
 import net from "node:net";
+import process from "node:process";
 
 const DEFAULT_PORTS = [5173, 8787];
+const PROJECT_PATH = process.cwd().replace(/\\/g, "/");
 const RE_PROJECT = /\/app\//;
 const RE_VITE = /vite --host/;
-const RE_PROXY = /server\/proxy\.ts/;
+const RE_PROXY = /server[\\/]+proxy\.ts|server\/proxy\.ts/;
 const DRY_RUN = process.env.DRY_RUN === "1";
 const WAIT_MS = 5000;
+let processScanSkipped = false;
 
 function listProcesses() {
+  if (process.platform === "win32") return listWindowsProcesses();
+  return listPosixProcesses();
+}
+
+function listPosixProcesses() {
   // `ps -eo pid=,args=` gives clean "pid args" lines on Linux/alpine.
   const out = execFileSync("ps", ["-eo", "pid=,args="], { encoding: "utf8" });
   const lines = out.split("\n").filter(Boolean);
@@ -36,6 +44,34 @@ function listProcesses() {
     if (m) parsed.push({ pid: Number(m[1]), args: m[2] });
   }
   return parsed;
+}
+
+function listWindowsProcesses() {
+  const command =
+    "$ErrorActionPreference='Stop'; " +
+    "Get-CimInstance Win32_Process | " +
+    "Select-Object ProcessId,CommandLine | " +
+    "ConvertTo-Json -Compress";
+
+  try {
+    const out = execFileSync("powershell.exe", ["-NoProfile", "-Command", command], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+      windowsHide: true,
+    }).trim();
+    if (!out) return [];
+
+    const processes = JSON.parse(out);
+    return (Array.isArray(processes) ? processes : [processes])
+      .filter((proc) => proc && proc.ProcessId && proc.CommandLine)
+      .map((proc) => ({
+        pid: Number(proc.ProcessId),
+        args: String(proc.CommandLine),
+      }));
+  } catch {
+    processScanSkipped = true;
+    return [];
+  }
 }
 
 function isPortBusy(port) {
@@ -56,11 +92,18 @@ function isPortBusy(port) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+function isProjectProcess(args) {
+  const normalizedArgs = args.replace(/\\/g, "/");
+  return normalizedArgs.includes(PROJECT_PATH) || RE_PROJECT.test(normalizedArgs);
+}
+
 const stale = listProcesses().filter(
-  (p) => RE_PROJECT.test(p.args) && (RE_VITE.test(p.args) || RE_PROXY.test(p.args))
+  (p) => isProjectProcess(p.args) && (RE_VITE.test(p.args) || RE_PROXY.test(p.args))
 );
 
-if (stale.length === 0) {
+if (processScanSkipped) {
+  console.warn("[dev] Skipping stale-process cleanup on Windows; process inspection is unavailable.");
+} else if (stale.length === 0) {
   console.log("[dev] Ports are clean — no stale dev-server processes found.");
 } else {
   console.log(

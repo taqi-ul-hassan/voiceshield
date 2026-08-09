@@ -44,7 +44,18 @@ export default function TestRuns() {
               <thead><tr className="border-b border-app-border bg-app-soft/50"><th className={th}>Run ID</th><th className={th}>Agent</th><th className={th}>Persona</th><th className={th}>Date</th><th className={th}>Verdict</th><th className={th}>Risk</th><th className={th}>Flags</th></tr></thead>
               <tbody>
                 {runs.map((run) => (
-                  <tr key={run.id} onClick={() => navigate(`/test-runs/${run.id}`)} className="border-b border-app-border hover:bg-app-soft cursor-pointer transition-colors duration-150">
+                  <tr
+                    key={run.id}
+                    tabIndex={0}
+                    onClick={() => navigate(`/test-runs/${run.id}`)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        navigate(`/test-runs/${run.id}`);
+                      }
+                    }}
+                    className="border-b border-app-border hover:bg-app-soft focus-visible:bg-app-soft cursor-pointer transition-colors duration-150"
+                  >
                     <td className="px-6 py-3.5 text-xs font-mono text-app-muted">{shortId(run.id)}</td>
                     <td className="px-6 py-3.5 text-sm text-app-fg">{roleLabels[run.agentConfig.role]}</td>
                     <td className="px-6 py-3.5 text-sm text-app-muted capitalize">{run.persona}</td>

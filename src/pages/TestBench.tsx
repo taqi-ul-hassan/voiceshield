@@ -1,3 +1,4 @@
+import { KeyRound, PlayCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { advanceConversation, createConversation, evaluateConversation, submitCallerTurn } from "../features/voice-audit/conversation";
@@ -128,15 +129,30 @@ export default function TestBench() {
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={startConversation}
-            disabled={role === "custom" && !customName.trim()}
-            className="mt-6 px-5 py-2.5 rounded-full bg-ab text-ab-fg text-sm font-medium hover:opacity-90 active:scale-[0.97] transition-all duration-150 cursor-pointer disabled:bg-app-soft2 disabled:text-app-muted disabled:cursor-not-allowed shadow-sm"
-          >
-            Create conversation
-          </button>
-          <p className="text-xs text-app-muted mt-3">Current AI mode: {settings.aiProvider === "mock" ? "Mock responses" : settings.aimlModel}</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={startConversation}
+                disabled={role === "custom" && !customName.trim()}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ab text-ab-fg text-sm font-medium hover:opacity-90 active:scale-[0.97] transition-all duration-150 cursor-pointer disabled:bg-app-soft2 disabled:text-app-muted disabled:cursor-not-allowed shadow-sm"
+              >
+                <PlayCircle className="h-4 w-4" aria-hidden="true" />
+                Create conversation
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/settings")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-app-border bg-app-card text-app-fg text-sm font-medium hover:bg-app-card-hover active:scale-[0.97] transition-all duration-150 cursor-pointer shadow-sm"
+              >
+                <KeyRound className="h-4 w-4" aria-hidden="true" />
+                Configure keys
+              </button>
+            </div>
+            <span className="inline-flex w-fit rounded-full border border-app-border bg-app-soft px-3 py-1 text-xs font-medium text-app-muted">
+              {settings.aiProvider === "mock" ? "Mock mode active" : `AIML: ${settings.aimlModel}`}
+            </span>
+          </div>
         </section>
       ) : (
         <div className="space-y-6">
